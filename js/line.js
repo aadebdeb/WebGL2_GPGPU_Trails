@@ -138,11 +138,11 @@ vec3 curlnoise(vec3 x, float time) {
   vec3 dy = vec3(0.0, e, 0.0);
   vec3 dz = vec3(0.0, 0.0, e);
 
-  return normalize(vec3(
-    noiseZ(vec4(x + dy, time)) - noiseY(vec4(x + dz, time)),
-    noiseX(vec4(x + dz, time)) - noiseZ(vec4(x + dx, time)),
-    noiseY(vec4(x + dx, time)) - noiseX(vec4(x + dy, time))
-  ));
+  return vec3(
+    (noiseZ(vec4(x + dy, time)) - noiseZ(vec4(x - dy, time))) - (noiseY(vec4(x + dz, time)) - noiseY(vec4(x - dz, time))),
+    (noiseX(vec4(x + dz, time)) - noiseX(vec4(x - dz, time))) - (noiseZ(vec4(x + dx, time)) - noiseZ(vec4(x - dx, time))),
+    (noiseY(vec4(x + dx, time)) - noiseY(vec4(x - dx, time))) - (noiseX(vec4(x + dy, time)) - noiseX(vec4(x - dy, time)))
+  ) / (2.0 * e);
 }
 
 vec3 limit(vec3 v, float max) {
@@ -211,7 +211,7 @@ void main(void) {
       'max speed': 50.0,
       'max force': 30.0,
       'boundary radius': 200.0,
-      'noise scale': 0.05,
+      'noise scale': 0.005,
       'color': [30, 255, 240],
       'alpha': 0.05,
     },
@@ -227,7 +227,7 @@ void main(void) {
   dynamicFolder.add(parameters.dynamic, 'max speed', 0.0, 100.0);
   dynamicFolder.add(parameters.dynamic, 'max force', 0.0, 100.0);
   dynamicFolder.add(parameters.dynamic, 'boundary radius', 50.0, 400.0);
-  dynamicFolder.add(parameters.dynamic, 'noise scale', 0.0, 0.2).step(0.001);
+  dynamicFolder.add(parameters.dynamic, 'noise scale', 0.0, 0.02).step(0.0001);
   dynamicFolder.addColor(parameters.dynamic, 'color');
   dynamicFolder.add(parameters.dynamic, 'alpha', 0.0, 1.0).step(0.001);
   const staticFolder = gui.addFolder('static parameter');
@@ -288,13 +288,14 @@ void main(void) {
       swapTrailFbObj();
     };
 
+    const timeOffset = Math.random() * 100000.0;
     const updateTrails = (elapsedTime, deltaTime) => {
       gl.bindFramebuffer(gl.FRAMEBUFFER, trailFbObjW.framebuffer);
       gl.viewport(0.0, 0.0, trailTextureSize.x, trailTextureSize.y);
       gl.useProgram(updateProgram);
       setUniformTexture(gl, 0, trailFbObjR.positionTexture, updateUniforms['u_positionTexture']);
       setUniformTexture(gl, 1, trailFbObjR.velocityTexture, updateUniforms['u_velocityTexture']);
-      gl.uniform1f(updateUniforms['u_time'], elapsedTime);
+      gl.uniform1f(updateUniforms['u_time'], elapsedTime + timeOffset);
       gl.uniform1f(updateUniforms['u_deltaTime'], deltaTime);
       gl.uniform1f(updateUniforms['u_maxSpeed'], parameters.dynamic['max speed']);
       gl.uniform1f(updateUniforms['u_maxForce'], parameters.dynamic['max force']);
