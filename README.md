@@ -4,16 +4,16 @@
 
 https://aadebdeb.github.io/WebGL2_GPGPU_Trails/line
 
-![imgae of line trails](https://user-images.githubusercontent.com/10070637/56251511-dabfda00-60ee-11e9-90df-f6c223234096.png)
+![imgae of line trails](https://user-images.githubusercontent.com/10070637/56286929-f7432d00-6155-11e9-9ed6-7ff0fe9ed9ef.png)
 
 ## Plane Trails
 
 https://aadebdeb.github.io/WebGL2_GPGPU_Trails/plane
 
-![image of plane trails](https://user-images.githubusercontent.com/10070637/56251518-deebf780-60ee-11e9-88b0-0ba9cdc9173a.png)
+![image of plane trails](https://user-images.githubusercontent.com/10070637/56286930-f7432d00-6155-11e9-88f1-be71ae17ecad.png)
 
 ## Cylinder Trails
 
 https://aadebdeb.github.io/WebGL2_GPGPU_Trails/cylinder
 
-![image of cylinder trails](https://user-images.githubusercontent.com/10070637/56251527-e6130580-60ee-11e9-8f1e-85ad8ddc429d.png)
+![image of cylinder trails](https://user-images.githubusercontent.com/10070637/56286928-f6aa9680-6155-11e9-841e-c544283440a4.png)
