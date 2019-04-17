@@ -397,7 +397,8 @@ void main(void) {
     },
     static: {
       'trail num': 4096,
-      'vertex num': 256
+      'vertex num': 256,
+      'cylinder radius': 2.0,
     },
     'reset': _ => reset()
   };
@@ -412,6 +413,7 @@ void main(void) {
   const staticFolder = gui.addFolder('static parameter');
   staticFolder.add(parameters.static, 'trail num', 1, 16384).step(1);
   staticFolder.add(parameters.static, 'vertex num', 1, 1024).step(1);
+  staticFolder.add(parameters.static, 'cylinder radius', 0.0, 10.0).step(0.01);
   gui.add(parameters, 'reset');
 
   const canvas = document.getElementById('canvas');
@@ -451,7 +453,7 @@ void main(void) {
     const trailNum = parameters.static['trail num'];
     const vertexNum = parameters.static['vertex num'];
 
-    const mesh = createCylinderMesh(2.0, 8, vertexNum);
+    const mesh = createCylinderMesh(parameters.static['cylinder radius'], 8, vertexNum);
     const meshPositionVbo = createVbo(gl, mesh.positions);
     const meshNormalVbo = createVbo(gl, mesh.normals);
     const meshTrailVertexVbo = createVbo(gl, mesh.trailVertices);
