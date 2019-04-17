@@ -271,8 +271,8 @@ uniform mat4 u_vpMatrix;
 
 mat4 getLookMat(vec3 front, vec3 up) {
   vec3 z = -normalize(front);
-  vec3 x = cross(up, z);
-  vec3 y = cross(z, x);
+  vec3 y = up;
+  vec3 x = cross(y, z);
 
   return mat4(
     x.x, x.y, x.z, 0.0,
@@ -294,9 +294,9 @@ void main(void) {
     0.0, 1.0, 0.0, 0.0,
     0.0, 0.0, 1.0, 0.0,
     instancePosition.x, instancePosition.y, instancePosition.z, 1.0
-  );
+  ) * lookMat;
 
-  mat4 mvpMatrix = u_vpMatrix * modelMatrix * lookMat;
+  mat4 mvpMatrix = u_vpMatrix * modelMatrix;
   v_normal = (lookMat * vec4(i_normal, 0.0)).xyz;
   gl_Position = mvpMatrix * vec4(i_position, 1.0);
 }

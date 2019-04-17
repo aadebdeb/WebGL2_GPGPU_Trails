@@ -313,8 +313,8 @@ uniform mat4 u_vpMatrix;
 
 mat4 getLookMat(vec3 front, vec3 up) {
   vec3 z = -normalize(front);
-  vec3 x = cross(z, up);
-  vec3 y = cross(x, z);
+  vec3 y = up;
+  vec3 x = cross(z, y);
 
   return mat4(
     x.x, x.y, x.z, 0.0,
